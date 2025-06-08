@@ -1,175 +1,177 @@
 {
-  "dashboard": {
-    "id": null,
-    "title": "Node.js Backend Monitoring",
-    "tags": ["nodejs", "express", "monitoring"],
-    "style": "dark",
-    "timezone": "browser",
-    "panels": [
-      {
-        "id": 1,
-        "title": "HTTP Request Rate",
-        "type": "graph",
-        "targets": [
-          {
-            "expr": "rate(http_requests_total[5m])",
-            "legendFormat": "{{method}} {{route}} - {{status_code}}"
-          }
-        ],
-        "xAxis": {
-          "show": true
-        },
-        "yAxes": [
-          {
-            "label": "Requests/sec",
-            "show": true
-          }
-        ],
-        "gridPos": {
-          "h": 9,
-          "w": 12,
-          "x": 0,
-          "y": 0
+  "id": null,
+  "title": "Node.js Backend Monitoring",
+  "tags": ["nodejs", "express", "monitoring"],
+  "style": "dark",
+  "timezone": "browser",
+  "panels": [
+    {
+      "id": 1,
+      "title": "HTTP Request Rate",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "rate(http_requests_total[5m])",
+          "legendFormat": "{{method}} {{route}} - {{status_code}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps"
         }
       },
-      {
-        "id": 2,
-        "title": "HTTP Request Duration",
-        "type": "graph",
-        "targets": [
-          {
-            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
-            "legendFormat": "95th percentile"
-          },
-          {
-            "expr": "histogram_quantile(0.50, rate(http_request_duration_seconds_bucket[5m]))",
-            "legendFormat": "50th percentile"
-          }
-        ],
-        "xAxis": {
-          "show": true
-        },
-        "yAxes": [
-          {
-            "label": "Duration (s)",
-            "show": true
-          }
-        ],
-        "gridPos": {
-          "h": 9,
-          "w": 12,
-          "x": 12,
-          "y": 0
-        }
-      },
-      {
-        "id": 3,
-        "title": "Active Connections",
-        "type": "singlestat",
-        "targets": [
-          {
-            "expr": "http_active_connections",
-            "legendFormat": "Active Connections"
-          }
-        ],
-        "gridPos": {
-          "h": 4,
-          "w": 6,
-          "x": 0,
-          "y": 9
-        }
-      },
-      {
-        "id": 4,
-        "title": "Memory Usage",
-        "type": "graph",
-        "targets": [
-          {
-            "expr": "nodejs_heap_size_used_bytes",
-            "legendFormat": "Heap Used"
-          },
-          {
-            "expr": "nodejs_heap_size_total_bytes",
-            "legendFormat": "Heap Total"
-          }
-        ],
-        "xAxis": {
-          "show": true
-        },
-        "yAxes": [
-          {
-            "label": "Bytes",
-            "show": true
-          }
-        ],
-        "gridPos": {
-          "h": 9,
-          "w": 12,
-          "x": 6,
-          "y": 9
-        }
-      },
-      {
-        "id": 5,
-        "title": "CPU Usage",
-        "type": "graph",
-        "targets": [
-          {
-            "expr": "rate(nodejs_process_cpu_usage_micros[5m]) / 1000000",
-            "legendFormat": "CPU Usage"
-          }
-        ],
-        "xAxis": {
-          "show": true
-        },
-        "yAxes": [
-          {
-            "label": "Usage %",
-            "show": true
-          }
-        ],
-        "gridPos": {
-          "h": 9,
-          "w": 12,
-          "x": 0,
-          "y": 18
-        }
-      },
-      {
-        "id": 6,
-        "title": "Error Rate",
-        "type": "graph",
-        "targets": [
-          {
-            "expr": "rate(http_requests_total{status_code=~\"5..\"}[5m])",
-            "legendFormat": "5xx Errors"
-          },
-          {
-            "expr": "rate(http_requests_total{status_code=~\"4..\"}[5m])",
-            "legendFormat": "4xx Errors"
-          }
-        ],
-        "xAxis": {
-          "show": true
-        },
-        "yAxes": [
-          {
-            "label": "Errors/sec",
-            "show": true
-          }
-        ],
-        "gridPos": {
-          "h": 9,
-          "w": 12,
-          "x": 12,
-          "y": 18
-        }
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
       }
-    ],
-    "time": {
-      "from": "now-1h",
-      "to": "now"
     },
-    "refresh": "5s"
-  }
+    {
+      "id": 2,
+      "title": "HTTP Request Duration",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+          "legendFormat": "95th percentile"
+        },
+        {
+          "expr": "histogram_quantile(0.50, rate(http_request_duration_seconds_bucket[5m]))",
+          "legendFormat": "50th percentile"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      }
+    },
+    {
+      "id": 3,
+      "title": "Total Requests",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "sum(http_requests_total)",
+          "legendFormat": "Total Requests"
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 8
+      }
+    },
+    {
+      "id": 4,
+      "title": "Active Requests",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "http_active_requests",
+          "legendFormat": "Active"
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 8
+      }
+    },
+    {
+      "id": 5,
+      "title": "Memory Usage",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "nodejs_heap_size_used_bytes",
+          "legendFormat": "Heap Used"
+        },
+        {
+          "expr": "nodejs_heap_size_total_bytes",
+          "legendFormat": "Heap Total"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      }
+    },
+    {
+      "id": 6,
+      "title": "HTTP Status Codes",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "rate(http_requests_total{status_code=~\"2..\"}[5m])",
+          "legendFormat": "2xx Success"
+        },
+        {
+          "expr": "rate(http_requests_total{status_code=~\"4..\"}[5m])",
+          "legendFormat": "4xx Client Error"
+        },
+        {
+          "expr": "rate(http_requests_total{status_code=~\"5..\"}[5m])",
+          "legendFormat": "5xx Server Error"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      }
+    },
+    {
+      "id": 7,
+      "title": "Process Uptime",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "nodejs_process_start_time_seconds",
+          "legendFormat": "Started"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dateTimeFromNow"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      }
+    }
+  ],
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "refresh": "5s",
+  "schemaVersion": 36,
+  "version": 1,
+  "uid": "nodejs-backend"
 }
