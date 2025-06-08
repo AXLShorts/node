@@ -1,0 +1,13 @@
+import { Router } from 'express';
+
+import { get{{pascalCase name}} } from '../controller/index.js';
+import { validateRequest } from '../../../middleware/validation.js';
+import { {{camelCase name}}QuerySchema } from '../validation/index.js';
+
+export const {{camelCase name}}Router = Router();
+
+{{camelCase name}}Router.get(
+  '/',
+  validateRequest({ query: {{camelCase name}}QuerySchema }),
+  get{{pascalCase name}}
+);

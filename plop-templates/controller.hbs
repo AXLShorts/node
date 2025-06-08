@@ -1,0 +1,17 @@
+import { Request, Response } from 'express';
+
+import { createSuccessResponse, createErrorResponse } from '../../../core/response.js';
+import { {{camelCase name}}Service } from '../service/index.js';
+
+export const get{{pascalCase name}} = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.query as { id: string };
+    
+    const result = await {{camelCase name}}Service.getById(id);
+    
+    res.json(createSuccessResponse(result, '{{pascalCase name}} retrieved successfully'));
+  } catch (error) {
+    console.error('Error in get{{pascalCase name}}:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve {{kebabCase name}}'));
+  }
+};
