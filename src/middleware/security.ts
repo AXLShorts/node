@@ -1,5 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import rateLimit from 'express-rate-limit';
+
+import { logger } from '../utils/logger';
 
 export const generalRateLimit = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -26,6 +28,6 @@ export const authRateLimit = rateLimit({
 });
 
 export const logRequests = (req: Request, _res: Response, next: NextFunction): void => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  logger.info(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 };

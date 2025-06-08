@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { validateRequest } from '../../../middleware/validation';
 import { 
   create{{pascalCase name}}, 
   get{{pascalCase name}}, 
@@ -7,7 +8,6 @@ import {
   update{{pascalCase name}}, 
   delete{{pascalCase name}} 
 } from '../controller/index';
-import { validateRequest } from '../../../middleware/validation';
 import { 
   create{{pascalCase name}}Schema, 
   update{{pascalCase name}}Schema, 

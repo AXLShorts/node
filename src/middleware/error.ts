@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { createErrorResponse } from '../core/response';
+import { logger } from '../utils/logger';
 
 export const errorHandler = (
   error: Error,
@@ -8,7 +9,7 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction
 ): void => {
-  console.error('Error:', error);
+  logger.error('Error:', error);
 
   if (res.headersSent) {
     return;

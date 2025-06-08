@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+import { logger } from '../utils/logger';
 interface DatabaseConfig {
   uri: string;
   options?: mongoose.ConnectOptions;
@@ -14,24 +15,24 @@ export const connectDatabase = async (config: DatabaseConfig): Promise<void> => 
       ...config.options,
     });
 
-    console.log(`✅ MongoDB connected: ${connection.connection.host}`);
+    logger.info(`✅ MongoDB connected: ${connection.connection.host}`);
 
     // Handle connection events
     mongoose.connection.on('error', error => {
-      console.error('❌ MongoDB connection error:', error);
+      logger.error('❌ MongoDB connection error:', error);
     });
 
     mongoose.connection.on('disconnected', () => {
-      console.warn('⚠️ MongoDB disconnected');
+      logger.warn('⚠️ MongoDB disconnected');
     });
 
     process.on('SIGINT', async () => {
       await mongoose.connection.close();
-      console.log('📴 MongoDB connection closed through app termination');
+      logger.info('📴 MongoDB connection closed through app termination');
       process.exit(0);
     });
   } catch (error) {
-    console.error('❌ Database connection failed:', error);
+    logger.error('❌ Database connection failed:', error);
     process.exit(1);
   }
 };
@@ -39,8 +40,8 @@ export const connectDatabase = async (config: DatabaseConfig): Promise<void> => 
 export const disconnectDatabase = async (): Promise<void> => {
   try {
     await mongoose.connection.close();
-    console.log('📴 MongoDB connection closed');
+    logger.info('📴 MongoDB connection closed');
   } catch (error) {
-    console.error('❌ Error closing database connection:', error);
+    logger.error('❌ Error closing database connection:', error);
   }
 };

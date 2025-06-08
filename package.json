@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Production-ready Node.js + Express backend with TypeScript",
   "main": "dist/server.js",
+  "type": "module",
   "scripts": {
     "dev": "ts-node-dev --respawn --watch src,package.json,.env,.env.local,.env.example --poll --ignore-watch node_modules --ignore-watch dist src/server.ts",
     "build": "tsc",

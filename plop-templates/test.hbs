@@ -1,5 +1,5 @@
-import { {{camelCase name}}Service } from '../service/index';
 import { {{pascalCase name}}Model } from '../model/index';
+import { {{camelCase name}}Service } from '../service/index';
 
 // Mock the model
 jest.mock('../model/index', () => ({
@@ -39,7 +39,7 @@ describe('{{pascalCase name}} Service', () => {
         }),
       };
 
-      mock{{pascalCase name}}Model.mockImplementation(() => mockResult as any);
+      mock{{pascalCase name}}Model.mockImplementation(() => mockResult as unknown as InstanceType<typeof {{pascalCase name}}Model>);
 
       const result = await {{camelCase name}}Service.create(mockData);
 
