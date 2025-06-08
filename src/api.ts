@@ -13,10 +13,11 @@ apiRouter.get('/', (_req, res) => {
   res.json({
     success: true,
     status: 200,
-    message: 'API is running',
+    message: 'Hot reload test - ' + new Date().getTime(),
     data: {
       version: '1.0.0',
       timestamp: new Date().toISOString(),
+      hotReload: true,
     },
   });
 });
