@@ -6,8 +6,4 @@ import { userQuerySchema } from '../validation/index.js';
 
 export const userRouter = Router();
 
-userRouter.get(
-  '/',
-  validateRequest({ query: userQuerySchema }),
-  getUser
-);
+userRouter.get('/', validateRequest({ query: userQuerySchema }), getUser);
