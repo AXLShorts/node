@@ -1,14 +1,15 @@
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
 import compression from 'compression';
+import cors from 'cors';
+import express from 'express';
+import helmet from 'helmet';
 import morgan from 'morgan';
 
-import { appConfig, isDevelopment } from './utils/config.js';
-import { errorHandler, notFoundHandler } from './middleware/error.js';
-import { generalRateLimit, logRequests } from './middleware/security.js';
-import { metricsMiddleware, getMetrics } from './middleware/metrics.js';
 import { apiRouter } from './api';
+import { errorHandler, notFoundHandler } from './middleware/error';
+import { metricsMiddleware, getMetrics } from './middleware/metrics';
+import { generalRateLimit, logRequests } from './middleware/security';
+import { appConfig, isDevelopment } from './utils/config';
+import { createSwaggerMiddleware, swaggerUi } from './utils/swagger';
 
 export const createApp = (): express.Application => {
   const app = express();
@@ -58,6 +59,14 @@ export const createApp = (): express.Application => {
 
   // API routes
   app.use('/api', apiRouter);
+
+  // API Documentation (Swagger UI)
+  app.use('/api-docs', swaggerUi.serve, createSwaggerMiddleware());
+
+  // Redirect root to API docs for convenience
+  app.get('/', (_req, res) => {
+    res.redirect('/api-docs');
+  });
 
   // Error handling
   app.use(notFoundHandler);

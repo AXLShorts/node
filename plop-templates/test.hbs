@@ -1,13 +1,139 @@
-import { {{camelCase name}}Service } from '../service/index.js';
+import { {{camelCase name}}Service } from '../service/index';
+import { {{pascalCase name}}Model } from '../model/index';
+
+// Mock the model
+jest.mock('../model/index', () => ({
+  {{pascalCase name}}Model: jest.fn().mockImplementation(() => ({
+    save: jest.fn(),
+  })),
+}));
+
+// Add static methods to the mocked constructor
+const mock{{pascalCase name}}Model = {{pascalCase name}}Model as jest.MockedClass<typeof {{pascalCase name}}Model>;
+(mock{{pascalCase name}}Model.findById as jest.Mock) = jest.fn();
+(mock{{pascalCase name}}Model.find as jest.Mock) = jest.fn();
+(mock{{pascalCase name}}Model.findByIdAndUpdate as jest.Mock) = jest.fn();
+(mock{{pascalCase name}}Model.findByIdAndDelete as jest.Mock) = jest.fn();
 
 describe('{{pascalCase name}} Service', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('create', () => {
+    it('should create a new {{camelCase name}}', async () => {
+      const mockData = {
+{{#each schemaFields}}
+        {{this.name}}: {{#if (eq this.type "string")}}'test {{this.name}}'{{/if}}{{#if (eq this.type "number")}}123{{/if}}{{#if (eq this.type "boolean")}}true{{/if}}{{#if (eq this.type "date")}}new Date(){{/if}},
+{{/each}}
+      };      const mockResult = { 
+        _id: 'test-id-123',
+        ...mockData,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        save: jest.fn().mockResolvedValue({
+          _id: 'test-id-123',
+          ...mockData,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }),
+      };
+
+      mock{{pascalCase name}}Model.mockImplementation(() => mockResult as any);
+
+      const result = await {{camelCase name}}Service.create(mockData);
+
+      expect(result).toBeDefined();
+      expect(mockResult.save).toHaveBeenCalled();
+    });
+  });
+
   describe('getById', () => {
-    it('should return the same id that was passed in', async () => {
+    it('should return a {{camelCase name}} by id', async () => {
       const testId = 'test-id-123';
-      
+      const mockResult = { 
+        _id: testId,
+{{#each schemaFields}}
+        {{this.name}}: {{#if (eq this.type "string")}}'test {{this.name}}'{{/if}}{{#if (eq this.type "number")}}123{{/if}}{{#if (eq this.type "boolean")}}true{{/if}}{{#if (eq this.type "date")}}new Date(){{/if}},
+{{/each}}
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };      (mock{{pascalCase name}}Model.findById as jest.Mock).mockResolvedValue(mockResult);
+
       const result = await {{camelCase name}}Service.getById(testId);
-      
-      expect(result.id).toBe(testId);
+
+      expect(mock{{pascalCase name}}Model.findById as jest.Mock).toHaveBeenCalledWith(testId);
+      expect(result).toEqual(mockResult);
+    });
+  });
+
+  describe('getAll', () => {
+    it('should return all {{camelCase name}}s', async () => {
+      const mockResults = [
+        { 
+          _id: 'test-id-1',
+{{#each schemaFields}}
+          {{this.name}}: {{#if (eq this.type "string")}}'test {{this.name}} 1'{{/if}}{{#if (eq this.type "number")}}123{{/if}}{{#if (eq this.type "boolean")}}true{{/if}}{{#if (eq this.type "date")}}new Date(){{/if}},
+{{/each}}
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        { 
+          _id: 'test-id-2',
+{{#each schemaFields}}
+          {{this.name}}: {{#if (eq this.type "string")}}'test {{this.name}} 2'{{/if}}{{#if (eq this.type "number")}}456{{/if}}{{#if (eq this.type "boolean")}}false{{/if}}{{#if (eq this.type "date")}}new Date(){{/if}},
+{{/each}}
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ];      (mock{{pascalCase name}}Model.find as jest.Mock).mockResolvedValue(mockResults);
+
+      const result = await {{camelCase name}}Service.getAll();
+
+      expect(mock{{pascalCase name}}Model.find as jest.Mock).toHaveBeenCalled();
+      expect(result).toEqual(mockResults);
+    });
+  });
+
+  describe('update', () => {
+    it('should update a {{camelCase name}}', async () => {
+      const testId = 'test-id-123';
+      const updateData = {
+{{#each schemaFields}}
+        {{this.name}}: {{#if (eq this.type "string")}}'updated {{this.name}}'{{/if}}{{#if (eq this.type "number")}}999{{/if}}{{#if (eq this.type "boolean")}}false{{/if}}{{#if (eq this.type "date")}}new Date(){{/if}},
+{{/each}}
+      };
+
+      const mockResult = { 
+        _id: testId,
+        ...updateData,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };      (mock{{pascalCase name}}Model.findByIdAndUpdate as jest.Mock).mockResolvedValue(mockResult);
+
+      const result = await {{camelCase name}}Service.update(testId, updateData);
+
+      expect(mock{{pascalCase name}}Model.findByIdAndUpdate as jest.Mock).toHaveBeenCalledWith(testId, updateData, { new: true });
+      expect(result).toEqual(mockResult);
+    });
+  });
+
+  describe('delete', () => {
+    it('should delete a {{camelCase name}}', async () => {
+      const testId = 'test-id-123';
+      const mockResult = { 
+        _id: testId,
+{{#each schemaFields}}
+        {{this.name}}: {{#if (eq this.type "string")}}'test {{this.name}}'{{/if}}{{#if (eq this.type "number")}}123{{/if}}{{#if (eq this.type "boolean")}}true{{/if}}{{#if (eq this.type "date")}}new Date(){{/if}},
+{{/each}}
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };      (mock{{pascalCase name}}Model.findByIdAndDelete as jest.Mock).mockResolvedValue(mockResult);
+
+      const result = await {{camelCase name}}Service.delete(testId);
+
+      expect(mock{{pascalCase name}}Model.findByIdAndDelete as jest.Mock).toHaveBeenCalledWith(testId);
+      expect(result).toEqual(mockResult);
     });
   });
 });

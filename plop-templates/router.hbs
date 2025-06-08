@@ -6,13 +6,13 @@ import {
   getAll{{pascalCase name}}s, 
   update{{pascalCase name}}, 
   delete{{pascalCase name}} 
-} from '../controller/index.js';
-import { validateRequest } from '../../../middleware/validation.js';
+} from '../controller/index';
+import { validateRequest } from '../../../middleware/validation';
 import { 
   create{{pascalCase name}}Schema, 
   update{{pascalCase name}}Schema, 
   {{camelCase name}}QuerySchema 
-} from '../validation/index.js';
+} from '../validation/index';
 
 export const {{camelCase name}}Router = Router();
 

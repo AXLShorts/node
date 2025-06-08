@@ -1,7 +1,7 @@
 // Jest setup file for testing
 
 // Mock the database connection module
-jest.mock('../db/connection.js', () => ({
+jest.mock('../db/connection.ts', () => ({
   connectDatabase: jest.fn().mockResolvedValue(undefined),
   disconnectDatabase: jest.fn().mockResolvedValue(undefined),
 }));

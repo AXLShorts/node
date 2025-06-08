@@ -4,13 +4,13 @@
     "node": true,
     "jest": true
   },
-  "extends": ["eslint:recommended"],
+  "extends": ["eslint:recommended", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "import"],
   "rules": {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
@@ -20,12 +20,26 @@
         "varsIgnorePattern": "^_"
       }
     ],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
     "prefer-arrow-callback": "error",
     "arrow-spacing": "error",
     "no-var": "error",
     "prefer-const": "error",
     "object-shorthand": "error",
-    "prefer-template": "error"
+    "prefer-template": "error",
+    "no-console": "warn",
+    "no-debugger": "error"
   },
   "ignorePatterns": ["dist", "node_modules", "*.js", "**/*.hbs"]
 }

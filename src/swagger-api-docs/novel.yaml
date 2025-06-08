@@ -1,20 +1,20 @@
 openapi: 3.0.0
 info:
-  title: Novels API
+  title: Novel API
   version: 1.0.0
-  description: API endpoints for novels operations
+  description: API endpoints for novel operations
 
 components:
   schemas:
-    Novels:
+    Novel:
       type: object
       properties:
         _id:
           type: string
-          example: '507f1f77bcf86cd799439011'
+          example: "507f1f77bcf86cd799439011"
         email:
           type: string
-          example: 'sample email'
+          example: "sample email"
         age:
           type: number
           example: 123
@@ -24,13 +24,13 @@ components:
         createdAt:
           type: string
           format: date-time
-          example: '2023-01-01T00:00:00Z'
+          example: "2023-01-01T00:00:00Z"
         updatedAt:
           type: string
           format: date-time
-          example: '2023-01-01T00:00:00Z'
+          example: "2023-01-01T00:00:00Z"
 
-    CreateNovelsRequest:
+    CreateNovelRequest:
       type: object
       required:
         - email
@@ -39,7 +39,7 @@ components:
       properties:
         email:
           type: string
-          example: 'sample email'
+          example: "sample email"
         age:
           type: number
           example: 123
@@ -47,12 +47,12 @@ components:
           type: boolean
           example: true
 
-    UpdateNovelsRequest:
+    UpdateNovelRequest:
       type: object
       properties:
         email:
           type: string
-          example: 'updated email'
+          example: "updated email"
         age:
           type: number
           example: 456
@@ -61,72 +61,10 @@ components:
           example: false
 
 paths:
-  /api/novels:
+  /api/novel:
     get:
-      summary: Get all novelss
-      description: Retrieve all novelss
-      responses:
-        '200':
-          description: Novelss retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Novels'
-                  status:
-                    type: integer
-                    example: 200
-                  message:
-                    type: string
-                    example: 'Novelss retrieved successfully'
-
-    post:
-      summary: Create a new novels
-      description: Create a new novels
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateNovelsRequest'
-      responses:
-        '201':
-          description: Novels created successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: '#/components/schemas/Novels'
-                  status:
-                    type: integer
-                    example: 201
-                  message:
-                    type: string
-                    example: 'Novels created successfully'
-
-  /api/novels/{id}:
-    get:
-      summary: Get novels by ID
-      description: Retrieve a novels by its ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-          description: The ID of the novels to retrieve
+      summary: Get all novels
+      description: Retrieve all novels
       responses:
         '200':
           description: Novels retrieved successfully
@@ -139,35 +77,28 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    $ref: '#/components/schemas/Novels'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Novel'
                   status:
                     type: integer
                     example: 200
                   message:
                     type: string
-                    example: 'Novels retrieved successfully'
-        '404':
-          description: Novels not found
+                    example: "Novels retrieved successfully"
 
-    put:
-      summary: Update novels
-      description: Update a novels by its ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-          description: The ID of the novels to update
+    post:
+      summary: Create a new novel
+      description: Create a new novel
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateNovelsRequest'
+              $ref: '#/components/schemas/CreateNovelRequest'
       responses:
-        '200':
-          description: Novels updated successfully
+        '201':
+          description: Novel created successfully
           content:
             application/json:
               schema:
@@ -177,29 +108,98 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    $ref: '#/components/schemas/Novels'
+                    $ref: '#/components/schemas/Novel'
                   status:
                     type: integer
-                    example: 200
+                    example: 201
                   message:
                     type: string
-                    example: 'Novels updated successfully'
-        '404':
-          description: Novels not found
+                    example: "Novel created successfully"
 
-    delete:
-      summary: Delete novels
-      description: Delete a novels by its ID
+  /api/novel/{id}:
+    get:
+      summary: Get novel by ID
+      description: Retrieve a novel by its ID
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: string
-          description: The ID of the novels to delete
+          description: The ID of the novel to retrieve
       responses:
         '200':
-          description: Novels deleted successfully
+          description: Novel retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Novel'
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "Novel retrieved successfully"
+        '404':
+          description: Novel not found
+
+    put:
+      summary: Update novel
+      description: Update a novel by its ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the novel to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateNovelRequest'
+      responses:
+        '200':
+          description: Novel updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Novel'
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "Novel updated successfully"
+        '404':
+          description: Novel not found
+
+    delete:
+      summary: Delete novel
+      description: Delete a novel by its ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the novel to delete
+      responses:
+        '200':
+          description: Novel deleted successfully
           content:
             application/json:
               schema:
@@ -217,14 +217,14 @@ paths:
                     example: 200
                   message:
                     type: string
-                    example: 'Novels deleted successfully'
+                    example: "Novel deleted successfully"
         '404':
-          description: Novels not found
+          description: Novel not found
           content:
-            application/json:
+          application/json:
               schema:
-                type: object
-                properties:
+              type: object
+              properties:
                   status:
                     type: integer
                     example: 400
@@ -246,4 +246,4 @@ paths:
                     example: 500
                   message:
                     type: string
-                    example: 'Failed to retrieve novels'
+                    example: "Failed to retrieve novel"

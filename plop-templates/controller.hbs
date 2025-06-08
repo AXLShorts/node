@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 
-import { createSuccessResponse, createErrorResponse } from '../../../core/response.js';
-import { {{camelCase name}}Service } from '../service/index.js';
-import { Create{{pascalCase name}}Request, Update{{pascalCase name}}Request, {{pascalCase name}}QueryRequest } from '../validation/index.js';
+import { createSuccessResponse, createErrorResponse } from '../../../core/response';
+import { {{camelCase name}}Service } from '../service/index';
+import { Create{{pascalCase name}}Request, Update{{pascalCase name}}Request, {{pascalCase name}}QueryRequest } from '../validation/index';
 
 export const create{{pascalCase name}} = async (req: Request, res: Response): Promise<void> => {
   try {

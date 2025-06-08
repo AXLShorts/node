@@ -182,7 +182,7 @@ export default function (plop) {
         path: 'src/api.ts',
         pattern: /(\/\/ Import route modules here as they are created)/g,
         template:
-          "$1\nimport { {{camelCase name}}Router } from './components/{{kebabCase name}}/routes/index.js';",
+          "$1\nimport { {{camelCase name}}Router } from './components/{{kebabCase name}}/routes/index';",
       });
 
       actions.push({

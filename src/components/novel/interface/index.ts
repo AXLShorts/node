@@ -1,8 +1,10 @@
 import { Document } from 'mongoose';
 
-export interface IBooks extends Document {
+export interface INovel extends Document {
   _id: string;
   email: string;
+  age: number;
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

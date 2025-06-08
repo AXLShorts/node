@@ -1,18 +1,12 @@
 import { Router } from 'express';
 
 // Import route modules here as they are created
-import { novelsRouter } from './components/novels/routes/index.js';
-import { booksRouter } from './components/books/routes/index.js';
-import { userRouter } from './components/user/routes/index.js';
-// Example: import { userRouter } from './components/user/routes/index.js';
+import { novelRouter } from './components/novel/routes/index';
 
 export const apiRouter = Router();
 
 // API routes will be added here by Plop generators
-apiRouter.use('/novels', novelsRouter);
-apiRouter.use('/books', booksRouter);
-apiRouter.use('/user', userRouter);
-// Example: apiRouter.use('/users', userRouter);
+apiRouter.use('/novel', novelRouter);
 
 // Default API info endpoint
 apiRouter.get('/', (_req, res) => {

@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
-import { INovels } from '../interface/index.js';
+import { INovel } from '../interface/index';
 
-const novelsSchema = new mongoose.Schema<INovels>(
+const novelSchema = new mongoose.Schema<INovel>(
   {
     email: {
       type: String,
@@ -22,4 +22,4 @@ const novelsSchema = new mongoose.Schema<INovels>(
   }
 );
 
-export const NovelsModel = mongoose.model<INovels>('Novels', novelsSchema);
+export const NovelModel = mongoose.model<INovel>('Novel', novelSchema);

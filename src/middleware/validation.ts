@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodSchema, ZodError } from 'zod';
 
-import { createErrorResponse } from '../core/response.js';
+import { createErrorResponse } from '../core/response';
 
 export const validateRequest = (schema: {
   body?: ZodSchema;

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { createErrorResponse } from '../core/response.js';
+import { createErrorResponse } from '../core/response';
 
 export const errorHandler = (
   error: Error,
