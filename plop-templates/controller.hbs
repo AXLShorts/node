@@ -2,16 +2,83 @@ import { Request, Response } from 'express';
 
 import { createSuccessResponse, createErrorResponse } from '../../../core/response.js';
 import { {{camelCase name}}Service } from '../service/index.js';
+import { Create{{pascalCase name}}Request, Update{{pascalCase name}}Request, {{pascalCase name}}QueryRequest } from '../validation/index.js';
+
+export const create{{pascalCase name}} = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const data = req.body as Create{{pascalCase name}}Request;
+    
+    const result = await {{camelCase name}}Service.create(data);
+    
+    res.status(201).json(createSuccessResponse(result, '{{pascalCase name}} created successfully'));
+  } catch (error) {
+    console.error('Error in create{{pascalCase name}}:', error);
+    res.status(500).json(createErrorResponse('Failed to create {{kebabCase name}}'));
+  }
+};
 
 export const get{{pascalCase name}} = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { id } = req.query as { id: string };
+    const { id } = req.params as {{pascalCase name}}QueryRequest;
     
     const result = await {{camelCase name}}Service.getById(id);
+    
+    if (!result) {
+      res.status(404).json(createErrorResponse('{{pascalCase name}} not found'));
+      return;
+    }
     
     res.json(createSuccessResponse(result, '{{pascalCase name}} retrieved successfully'));
   } catch (error) {
     console.error('Error in get{{pascalCase name}}:', error);
     res.status(500).json(createErrorResponse('Failed to retrieve {{kebabCase name}}'));
+  }
+};
+
+export const getAll{{pascalCase name}}s = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const result = await {{camelCase name}}Service.getAll();
+    
+    res.json(createSuccessResponse(result, '{{pascalCase name}}s retrieved successfully'));
+  } catch (error) {
+    console.error('Error in getAll{{pascalCase name}}s:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve {{kebabCase name}}s'));
+  }
+};
+
+export const update{{pascalCase name}} = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params as {{pascalCase name}}QueryRequest;
+    const data = req.body as Update{{pascalCase name}}Request;
+    
+    const result = await {{camelCase name}}Service.update(id, data);
+    
+    if (!result) {
+      res.status(404).json(createErrorResponse('{{pascalCase name}} not found'));
+      return;
+    }
+    
+    res.json(createSuccessResponse(result, '{{pascalCase name}} updated successfully'));
+  } catch (error) {
+    console.error('Error in update{{pascalCase name}}:', error);
+    res.status(500).json(createErrorResponse('Failed to update {{kebabCase name}}'));
+  }
+};
+
+export const delete{{pascalCase name}} = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params as {{pascalCase name}}QueryRequest;
+    
+    const result = await {{camelCase name}}Service.delete(id);
+    
+    if (!result) {
+      res.status(404).json(createErrorResponse('{{pascalCase name}} not found'));
+      return;
+    }
+    
+    res.json(createSuccessResponse(null, '{{pascalCase name}} deleted successfully'));
+  } catch (error) {
+    console.error('Error in delete{{pascalCase name}}:', error);
+    res.status(500).json(createErrorResponse('Failed to delete {{kebabCase name}}'));
   }
 };

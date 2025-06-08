@@ -1,6 +1,26 @@
+import { {{pascalCase name}}Model } from '../model/index.js';
+import { I{{pascalCase name}} } from '../interface/index.js';
+import { Create{{pascalCase name}}Request, Update{{pascalCase name}}Request } from '../validation/index.js';
+
 export const {{camelCase name}}Service = {
-  getById: async (id: string): Promise<{ id: string }> => {
-    // Service logic here
-    return { id };
+  create: async (data: Create{{pascalCase name}}Request): Promise<I{{pascalCase name}}> => {
+    const {{camelCase name}} = new {{pascalCase name}}Model(data);
+    return await {{camelCase name}}.save();
+  },
+
+  getById: async (id: string): Promise<I{{pascalCase name}} | null> => {
+    return await {{pascalCase name}}Model.findById(id);
+  },
+
+  getAll: async (): Promise<I{{pascalCase name}}[]> => {
+    return await {{pascalCase name}}Model.find();
+  },
+
+  update: async (id: string, data: Update{{pascalCase name}}Request): Promise<I{{pascalCase name}} | null> => {
+    return await {{pascalCase name}}Model.findByIdAndUpdate(id, data, { new: true });
+  },
+
+  delete: async (id: string): Promise<I{{pascalCase name}} | null> => {
+    return await {{pascalCase name}}Model.findByIdAndDelete(id);
   },
 };

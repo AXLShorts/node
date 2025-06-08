@@ -1,13 +1,54 @@
 import { Router } from 'express';
 
-import { get{{pascalCase name}} } from '../controller/index.js';
+import { 
+  create{{pascalCase name}}, 
+  get{{pascalCase name}}, 
+  getAll{{pascalCase name}}s, 
+  update{{pascalCase name}}, 
+  delete{{pascalCase name}} 
+} from '../controller/index.js';
 import { validateRequest } from '../../../middleware/validation.js';
-import { {{camelCase name}}QuerySchema } from '../validation/index.js';
+import { 
+  create{{pascalCase name}}Schema, 
+  update{{pascalCase name}}Schema, 
+  {{camelCase name}}QuerySchema 
+} from '../validation/index.js';
 
 export const {{camelCase name}}Router = Router();
 
+// Create {{kebabCase name}}
+{{camelCase name}}Router.post(
+  '/',
+  validateRequest({ body: create{{pascalCase name}}Schema }),
+  create{{pascalCase name}}
+);
+
+// Get all {{kebabCase name}}s
 {{camelCase name}}Router.get(
   '/',
-  validateRequest({ query: {{camelCase name}}QuerySchema }),
+  getAll{{pascalCase name}}s
+);
+
+// Get {{kebabCase name}} by ID
+{{camelCase name}}Router.get(
+  '/:id',
+  validateRequest({ params: {{camelCase name}}QuerySchema }),
   get{{pascalCase name}}
+);
+
+// Update {{kebabCase name}}
+{{camelCase name}}Router.put(
+  '/:id',
+  validateRequest({ 
+    params: {{camelCase name}}QuerySchema, 
+    body: update{{pascalCase name}}Schema 
+  }),
+  update{{pascalCase name}}
+);
+
+// Delete {{kebabCase name}}
+{{camelCase name}}Router.delete(
+  '/:id',
+  validateRequest({ params: {{camelCase name}}QuerySchema }),
+  delete{{pascalCase name}}
 );

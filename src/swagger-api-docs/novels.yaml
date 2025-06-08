@@ -1,121 +1,73 @@
 openapi: 3.0.0
 info:
-  title: {{pascalCase name}} API
+  title: Novels API
   version: 1.0.0
-  description: API endpoints for {{kebabCase name}} operations
+  description: API endpoints for novels operations
 
 components:
   schemas:
-    {{pascalCase name}}:
+    Novels:
       type: object
       properties:
         _id:
           type: string
-          example: "507f1f77bcf86cd799439011"
-{{#each schemaFields}}
-        {{this.name}}:
-{{#if (eq this.type "string")}}
+          example: '507f1f77bcf86cd799439011'
+        email:
           type: string
-          example: "sample {{this.name}}"
-{{else if (eq this.type "number")}}
+          example: 'sample email'
+        age:
           type: number
           example: 123
-{{else if (eq this.type "boolean")}}
+        isActive:
           type: boolean
           example: true
-{{else if (eq this.type "date")}}
-          type: string
-          format: date-time
-          example: "2023-01-01T00:00:00Z"
-{{else if (eq this.type "array")}}
-          type: array
-          items:
-            type: string
-          example: ["item1", "item2"]
-{{else}}
-          type: object
-          example: {}
-{{/if}}
-{{/each}}
         createdAt:
           type: string
           format: date-time
-          example: "2023-01-01T00:00:00Z"
+          example: '2023-01-01T00:00:00Z'
         updatedAt:
           type: string
           format: date-time
-          example: "2023-01-01T00:00:00Z"
+          example: '2023-01-01T00:00:00Z'
 
-    Create{{pascalCase name}}Request:
+    CreateNovelsRequest:
       type: object
       required:
-{{#each schemaFields}}
-        - {{this.name}}
-{{/each}}
+        - email
+        - age
+        - isActive
       properties:
-{{#each schemaFields}}
-        {{this.name}}:
-{{#if (eq this.type "string")}}
+        email:
           type: string
-          example: "sample {{this.name}}"
-{{else if (eq this.type "number")}}
+          example: 'sample email'
+        age:
           type: number
           example: 123
-{{else if (eq this.type "boolean")}}
+        isActive:
           type: boolean
           example: true
-{{else if (eq this.type "date")}}
-          type: string
-          format: date-time
-          example: "2023-01-01T00:00:00Z"
-{{else if (eq this.type "array")}}
-          type: array
-          items:
-            type: string
-          example: ["item1", "item2"]
-{{else}}
-          type: object
-          example: {}
-{{/if}}
-{{/each}}
 
-    Update{{pascalCase name}}Request:
+    UpdateNovelsRequest:
       type: object
       properties:
-{{#each schemaFields}}
-        {{this.name}}:
-{{#if (eq this.type "string")}}
+        email:
           type: string
-          example: "updated {{this.name}}"
-{{else if (eq this.type "number")}}
+          example: 'updated email'
+        age:
           type: number
           example: 456
-{{else if (eq this.type "boolean")}}
+        isActive:
           type: boolean
           example: false
-{{else if (eq this.type "date")}}
-          type: string
-          format: date-time
-          example: "2023-12-31T23:59:59Z"
-{{else if (eq this.type "array")}}
-          type: array
-          items:
-            type: string
-          example: ["updated1", "updated2"]
-{{else}}
-          type: object
-          example: {}
-{{/if}}
-{{/each}}
 
 paths:
-  /api/{{kebabCase name}}:
+  /api/novels:
     get:
-      summary: Get all {{kebabCase name}}s
-      description: Retrieve all {{kebabCase name}}s
+      summary: Get all novelss
+      description: Retrieve all novelss
       responses:
         '200':
-          description: {{pascalCase name}}s retrieved successfully
+          description: Novelss retrieved successfully
           content:
             application/json:
               schema:
@@ -127,26 +79,26 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/{{pascalCase name}}'
+                      $ref: '#/components/schemas/Novels'
                   status:
                     type: integer
                     example: 200
                   message:
                     type: string
-                    example: "{{pascalCase name}}s retrieved successfully"
+                    example: 'Novelss retrieved successfully'
 
     post:
-      summary: Create a new {{kebabCase name}}
-      description: Create a new {{kebabCase name}}
+      summary: Create a new novels
+      description: Create a new novels
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Create{{pascalCase name}}Request'
+              $ref: '#/components/schemas/CreateNovelsRequest'
       responses:
         '201':
-          description: {{pascalCase name}} created successfully
+          description: Novels created successfully
           content:
             application/json:
               schema:
@@ -156,28 +108,28 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    $ref: '#/components/schemas/{{pascalCase name}}'
+                    $ref: '#/components/schemas/Novels'
                   status:
                     type: integer
                     example: 201
                   message:
                     type: string
-                    example: "{{pascalCase name}} created successfully"
+                    example: 'Novels created successfully'
 
-  /api/{{kebabCase name}}/{id}:
+  /api/novels/{id}:
     get:
-      summary: Get {{kebabCase name}} by ID
-      description: Retrieve a {{kebabCase name}} by its ID
+      summary: Get novels by ID
+      description: Retrieve a novels by its ID
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: string
-          description: The ID of the {{kebabCase name}} to retrieve
+          description: The ID of the novels to retrieve
       responses:
         '200':
-          description: {{pascalCase name}} retrieved successfully
+          description: Novels retrieved successfully
           content:
             application/json:
               schema:
@@ -187,35 +139,35 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    $ref: '#/components/schemas/{{pascalCase name}}'
+                    $ref: '#/components/schemas/Novels'
                   status:
                     type: integer
                     example: 200
                   message:
                     type: string
-                    example: "{{pascalCase name}} retrieved successfully"
+                    example: 'Novels retrieved successfully'
         '404':
-          description: {{pascalCase name}} not found
+          description: Novels not found
 
     put:
-      summary: Update {{kebabCase name}}
-      description: Update a {{kebabCase name}} by its ID
+      summary: Update novels
+      description: Update a novels by its ID
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: string
-          description: The ID of the {{kebabCase name}} to update
+          description: The ID of the novels to update
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Update{{pascalCase name}}Request'
+              $ref: '#/components/schemas/UpdateNovelsRequest'
       responses:
         '200':
-          description: {{pascalCase name}} updated successfully
+          description: Novels updated successfully
           content:
             application/json:
               schema:
@@ -225,29 +177,29 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    $ref: '#/components/schemas/{{pascalCase name}}'
+                    $ref: '#/components/schemas/Novels'
                   status:
                     type: integer
                     example: 200
                   message:
                     type: string
-                    example: "{{pascalCase name}} updated successfully"
+                    example: 'Novels updated successfully'
         '404':
-          description: {{pascalCase name}} not found
+          description: Novels not found
 
     delete:
-      summary: Delete {{kebabCase name}}
-      description: Delete a {{kebabCase name}} by its ID
+      summary: Delete novels
+      description: Delete a novels by its ID
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: string
-          description: The ID of the {{kebabCase name}} to delete
+          description: The ID of the novels to delete
       responses:
         '200':
-          description: {{pascalCase name}} deleted successfully
+          description: Novels deleted successfully
           content:
             application/json:
               schema:
@@ -265,14 +217,14 @@ paths:
                     example: 200
                   message:
                     type: string
-                    example: "{{pascalCase name}} deleted successfully"
+                    example: 'Novels deleted successfully'
         '404':
-          description: {{pascalCase name}} not found
+          description: Novels not found
           content:
-          application/json:
+            application/json:
               schema:
-              type: object
-              properties:
+                type: object
+                properties:
                   status:
                     type: integer
                     example: 400
@@ -294,4 +246,4 @@ paths:
                     example: 500
                   message:
                     type: string
-                    example: "Failed to retrieve {{kebabCase name}}"
+                    example: 'Failed to retrieve novels'

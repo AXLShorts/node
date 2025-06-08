@@ -2,7 +2,9 @@ import { Document } from 'mongoose';
 
 export interface I{{pascalCase name}} extends Document {
   _id: string;
+{{#each schemaFields}}
+  {{this.name}}: {{this.tsType}};
+{{/each}}
   createdAt: Date;
   updatedAt: Date;
-  // Additional fields will be defined here
 }

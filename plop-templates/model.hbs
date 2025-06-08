@@ -4,7 +4,12 @@ import { I{{pascalCase name}} } from '../interface/index.js';
 
 const {{camelCase name}}Schema = new mongoose.Schema<I{{pascalCase name}}>(
   {
-    // Schema fields will be defined here
+{{#each schemaFields}}
+    {{this.name}}: {
+      type: {{this.mongooseType}},
+      required: true,
+    },
+{{/each}}
   },
   {
     timestamps: true,
