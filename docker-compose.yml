@@ -6,20 +6,22 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - ./src:/app/src
-      - ./package.json:/app/package.json
-      - ./package-lock.json:/app/package-lock.json
-      - ./.env:/app/.env
+      - .:/app
       - /app/node_modules
+      - /app/dist
     environment:
       - NODE_ENV=development
       - MONGO_URI=mongodb://mongo:27017/production-backend
       - PORT=3000
       - CORS_ORIGIN=*
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     depends_on:
       - mongo
       - prometheus
     restart: unless-stopped
+    stdin_open: true
+    tty: true
 
   mongo:
     image: mongo:7-jammy

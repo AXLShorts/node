@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
-    "dev": "ts-node-dev --respawn --watch src,package.json,.env,.env.local,.env.example --poll --ignore-watch node_modules --ignore-watch dist src/server.ts",
+    "dev": "tsx watch --clear-screen=false --ignore=node_modules --ignore=dist src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "eslint src/**/*.ts",
@@ -69,6 +69,7 @@
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.19.4",
     "typescript": "^5.2.2"
   },
   "engines": {

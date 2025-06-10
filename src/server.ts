@@ -1,7 +1,8 @@
 import { createApp } from './app';
 import { connectDatabase } from './db/connection';
 import { appConfig } from './utils/config';
-import { logger } from './utils/logger';
+
+import { logger } from '@/utils/logger';
 
 const startServer = async (): Promise<void> => {
   try {

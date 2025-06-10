@@ -1,11 +1,11 @@
 # Development Dockerfile with hot reload
 FROM node:18-alpine
 
+# Install dependencies for file watching
+RUN apk add --no-cache bash
+
 # Set working directory
 WORKDIR /app
-
-# Install ts-node-dev globally for hot reload
-RUN npm install -g ts-node-dev
 
 # Copy package files
 COPY package.json ./
@@ -14,8 +14,10 @@ COPY package-lock.json ./
 # Install all dependencies (including dev dependencies)
 RUN npm ci
 
-# Copy source code
-COPY . .
+# Copy tsconfig for TypeScript compilation
+COPY tsconfig.json ./
+
+# Don't copy source code - it will be mounted as volume
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs
